@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Domains\Table\Commands;
+
+
+use App\Models\Table;
+use App\BaseUnits\BaseCommand;
+use Illuminate\Support\Collection;
+
+final class BrowseQuery extends BaseCommand
+{
+    public function __construct()
+    {
+    }
+
+    /**
+     * Handle the given event.
+     */
+    public function __invoke(): Collection
+    {
+        $this->authorize('browse', Table::class);
+
+        return Table::orderBy('table_name')->get();
+    }
+}

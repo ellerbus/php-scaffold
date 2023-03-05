@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Domains\Table;
+
+use Illuminate\Support\Facades\Route;
+
+final class TableRoutes
+{
+    public static function loadRoutes()
+    {
+        Route::prefix('tables')->name('tables.')->group(function ()
+        {
+            $namespace = 'App\\Http\\Controllers\\Table\\';
+
+            Route::get('/', "{$namespace}BrowseController")->name('browse');
+            Route::get('/create', "{$namespace}CreateController")->name('create');
+            Route::get('/{table}/update', "{$namespace}UpdateController")->name('update');
+            Route::get('/{table}/delete', "{$namespace}DeleteController")->name('delete');
+        });
+    }
+}

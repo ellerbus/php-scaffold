@@ -1,0 +1,10 @@
+{
+    "name": "ellerbus/php-scaffold",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "PrairieDog\\": "src/"
+        }
+    },
+    "require": {}
+}

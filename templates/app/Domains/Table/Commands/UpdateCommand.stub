@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Domains\Table\Commands;
+
+use App\Models\Table;
+use App\BaseUnits\BaseCommand;
+use App\Domains\Table\Validation\ValidationManager;
+
+final class UpdateCommand extends BaseCommand
+{
+    public function __construct(
+        public string $table_name,
+    )
+    {
+    }
+
+    /**
+     * Handle the given event.
+     */
+    public function __invoke(Table $table): Table
+    {
+        $this->authorize('update', $table);
+
+        $this->update($table);
+
+        return $table;
+    }
+
+    private function update(Table $table)
+    {
+        $fillable = $table->getFillable();
+
+        $data = $this->getData($fillable);
+
+        $manager = new ValidationManager($table);
+
+        $validated = $this->validate($data, $manager);
+
+        $table->update($validated);
+    }
+}

@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Domains\Table\Validation;
+
+use App\Models\Table;
+use App\BaseUnits\BaseValidationManager;
+
+final class ValidationManager extends BaseValidationManager
+{
+    public function __construct(
+        private Table | null $table
+    )
+    {
+        $this->rules = [
+            'table_name' => $this->tableNameRule(),
+        ];
+    }
+
+    /**
+     *
+     */
+    private function tableNameRule()
+    {
+        return [
+            'required',
+            'max:16',
+            new TableName($this->table)
+        ];
+    }
+}

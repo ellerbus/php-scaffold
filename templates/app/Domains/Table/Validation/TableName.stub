@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Domains\Table\Validation;
+
+
+use Illuminate\Contracts\Validation\InvokableRule;
+use Illuminate\Contracts\Validation\DataAwareRule;
+use App\Models\Table;
+
+final class TableName implements InvokableRule, DataAwareRule
+{
+    /**
+     *
+     */
+    public function __construct(
+        private Table | null $table
+    )
+    {
+    }
+
+    /**
+     * Set the data under validation.
+     *
+     * @param  array  $data
+     * @return $this
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * Run the validation rule.
+     *
+     * @param  string  $attribute
+     * @param  mixed  $value
+     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @return void
+     */
+    public function __invoke($attribute, $value, $fail)
+    {
+        $group_id = $this->table?->id ?: '';
+
+        $groups = Table::whereTableName($value)
+            ->where('id', '!=', $group_id)
+            ->count();
+
+        if ($groups > 0)
+        {
+            $fail('The :attribute already exists');
+        }
+    }
+}

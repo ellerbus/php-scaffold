@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Domains\Table\Commands;
+
+use App\Models\Table;
+use App\BaseUnits\BaseCommand;
+
+final class DeleteCommand extends BaseCommand
+{
+    public function __construct()
+    {
+    }
+
+    /**
+     * Handle the given event.
+     */
+    public function __invoke(Table $table): Table
+    {
+        $this->authorize('delete', $table);
+
+        $table->delete();
+
+        return $table;
+    }
+}

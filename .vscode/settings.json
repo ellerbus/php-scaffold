@@ -1,0 +1,26 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "editor.formatOnSave": true,
+    "editor.detectIndentation": false,
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "files.associations": {
+        "*.blade.php": "html",
+        "*.php": "php"
+    },
+    "javascript.format.enable": true,
+    "javascript.format.placeOpenBraceOnNewLineForControlBlocks": true,
+    "javascript.format.placeOpenBraceOnNewLineForFunctions": true,
+    "html.format.wrapAttributes": "preserve-aligned",
+    "[html]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true
+    },
+    "intelephense.format.braces": "allman",
+    "intelephense.format.enable": true,
+    "namespaceResolver.showMessageOnStatusBar": false,
+    "namespaceResolver.sortNatural": true,
+    "namespaceResolver.sortOnSave": true
+}

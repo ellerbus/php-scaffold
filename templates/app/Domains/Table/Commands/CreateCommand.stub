@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Domains\Table\Commands;
+
+use App\Models\Table;
+use App\Domains\Table\Validation\ValidationManager;
+use App\BaseUnits\BaseCommand;
+
+final class CreateCommand extends BaseCommand
+{
+    public function __construct(
+        public string $table_name,
+    )
+    {
+    }
+
+    /**
+     * Handle the given event.
+     */
+    public function __invoke(): Table
+    {
+        $this->authorize('create', Table::class);
+
+        return $this->create();
+    }
+
+    private function create(): Table
+    {
+        $table = new Table();
+
+        $fillable = $table->getFillable();
+
+        $data = $this->getData($fillable);
+
+        $manager = new ValidationManager(null);
+
+        $validated = $this->validate($data, $manager);
+
+        $table->fill($validated);
+
+        $table->sequence_number = Table::count() + 1;
+
+        $table->save();
+
+        return $table;
+    }
+}
